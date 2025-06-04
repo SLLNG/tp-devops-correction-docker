@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-push-docker-image:
-    needs: test-backend          # Attend que les tests soient OK
+    needs: test-backend          
     runs-on: ubuntu-24.04
   
     steps:
@@ -24,21 +24,21 @@ jobs:
       - name: Build and push backend image
         uses: docker/build-push-action@v6
         with:
-          context: ./simple-api               # Chemin relatif où se trouve Dockerfile backend
-          push: true                         # Pousse l'image sur Docker Hub
+          context: ./simple-api              
+          push: true                         
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api-backend:latest
   
       - name: Build and push database image
         uses: docker/build-push-action@v6
         with:
-          context: ./database                # À adapter selon emplacement Dockerfile DB
+          context: ./database                
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api-database:latest
   
       - name: Build and push httpd image
         uses: docker/build-push-action@v6
         with:
-          context: ./httpd                  # À adapter selon emplacement Dockerfile httpd
+          context: ./http-server                  
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api-httpd:latest
 
