@@ -1,0 +1,8 @@
+all:
+  vars:
+    ansible_user: admin
+    ansible_ssh_private_key_file: /home/simon/TP3/tp-devops-correction-docker/id_rsa
+  children:
+    prod:
+      hosts:
+        simon.lucas.takima.cloud:

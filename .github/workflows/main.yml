@@ -61,3 +61,19 @@ jobs:
           context: ./http-server
           push: ${{ github.ref == 'refs/heads/main' }}
           tags: ${{ secrets.DOCKER_USERNAME }}/tp-devops-simple-api-httpd:latest
+
+  deploy:
+    needs: build-and-push-docker-image
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Deploy to remote server with Ansible
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          script: |
+            cd ~/ansible-devops-tp
+            git pull origin main
+            ansible-playbook -i inventory.ini site.yml

@@ -1,0 +1,10 @@
+- name: Launch httpd container
+  docker_container:
+    name: httpd
+    image: simonlucas/tp-devops-simple-api-httpd:latest
+    state : started
+    restart_policy: always
+    published_ports:
+      - "80:80"
+    networks:
+      - name: my-network
